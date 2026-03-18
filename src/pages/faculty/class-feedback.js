@@ -27,7 +27,7 @@ export default function ClassFeedback() {
   const generateFeedback = async () => {
     if (!selectedQuiz) return;
     setFeedbackLoading(true);
-    try { const res = await api.get(`/ai/class-feedback/${selectedQuiz}`); setFeedback(res.data); }
+    try { const res = await api.get(`/ai/class-feedback/${selectedQuiz}`); console.log("CLASS FEEDBACK RESPONSE:", res.data); setFeedback(res.data); }
     catch (err) { alert(err.response?.data?.message || 'Failed to generate feedback'); }
     finally { setFeedbackLoading(false); }
   };
@@ -55,26 +55,26 @@ export default function ClassFeedback() {
 
       {feedback && (
         <div>
-          {feedback.overallAssessment && (
+          {feedback?.data?.overallAssessment && (
             <div className="card mb-6">
               <h4 style={{ marginBottom: 8 }}>Overall Assessment</h4>
-              <p className="text-sm text-secondary" style={{ lineHeight: 1.7 }}>{feedback.overallAssessment}</p>
+              <p className="text-sm text-secondary" style={{ lineHeight: 1.7 }}>{feedback.data.overallAssessment}</p>
             </div>
           )}
           <div className="card-grid">
             <div className="card">
               <h4 style={{ marginBottom: 12 }}>Strong Topics</h4>
-              {(Array.isArray(feedback.strongTopics) ? feedback.strongTopics : []).map((t, i) => <p key={i} className="text-sm text-secondary" style={{ marginBottom: 6 }}>{t}</p>)}
+              {(Array.isArray(feedback?.data?.strongTopics) ? feedback.data.strongTopics : []).map((t, i) => <p key={i} className="text-sm text-secondary" style={{ marginBottom: 6 }}>{t}</p>)}
             </div>
             <div className="card">
               <h4 style={{ marginBottom: 12 }}>Weak Topics</h4>
-              {(Array.isArray(feedback.weakTopics) ? feedback.weakTopics : []).map((t, i) => <p key={i} className="text-sm text-secondary" style={{ marginBottom: 6 }}>{t}</p>)}
+              {(Array.isArray(feedback?.data?.weakTopics) ? feedback.data.weakTopics : []).map((t, i) => <p key={i} className="text-sm text-secondary" style={{ marginBottom: 6 }}>{t}</p>)}
             </div>
           </div>
           <div className="card mt-4">
             <h4 style={{ marginBottom: 12 }}>Teaching Suggestions</h4>
             <ul style={{ paddingLeft: 18 }}>
-              {(Array.isArray(feedback.teachingSuggestions) ? feedback.teachingSuggestions : []).map((s, i) => <li key={i} className="text-sm text-secondary" style={{ marginBottom: 8, lineHeight: 1.6 }}>{s}</li>)}
+              {(Array.isArray(feedback?.data?.teachingSuggestions) ? feedback.data.teachingSuggestions : []).map((s, i) => <li key={i} className="text-sm text-secondary" style={{ marginBottom: 8, lineHeight: 1.6 }}>{s}</li>)}
             </ul>
           </div>
         </div>
