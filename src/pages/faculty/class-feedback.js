@@ -45,7 +45,7 @@ export default function ClassFeedback() {
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
           <select className="form-input" value={selectedQuiz} onChange={(e) => { setSelectedQuiz(e.target.value); setFeedback(null); }} style={{ maxWidth: 320 }}>
             <option value="">Select a quiz...</option>
-            {quizzes.map((q) => <option key={q.id} value={q.id}>{q.title}</option>)}
+            {(Array.isArray(quizzes) ? quizzes : []).map((q) => <option key={q.id} value={q.id}>{q.title}</option>)}
           </select>
           <button className="btn btn-primary" onClick={generateFeedback} disabled={!selectedQuiz || feedbackLoading}>
             {feedbackLoading ? 'Analyzing...' : 'Generate Feedback'}
@@ -64,17 +64,17 @@ export default function ClassFeedback() {
           <div className="card-grid">
             <div className="card">
               <h4 style={{ marginBottom: 12 }}>Strong Topics</h4>
-              {feedback.strongTopics?.map((t, i) => <p key={i} className="text-sm text-secondary" style={{ marginBottom: 6 }}>{t}</p>)}
+              {(Array.isArray(feedback.strongTopics) ? feedback.strongTopics : []).map((t, i) => <p key={i} className="text-sm text-secondary" style={{ marginBottom: 6 }}>{t}</p>)}
             </div>
             <div className="card">
               <h4 style={{ marginBottom: 12 }}>Weak Topics</h4>
-              {feedback.weakTopics?.map((t, i) => <p key={i} className="text-sm text-secondary" style={{ marginBottom: 6 }}>{t}</p>)}
+              {(Array.isArray(feedback.weakTopics) ? feedback.weakTopics : []).map((t, i) => <p key={i} className="text-sm text-secondary" style={{ marginBottom: 6 }}>{t}</p>)}
             </div>
           </div>
           <div className="card mt-4">
             <h4 style={{ marginBottom: 12 }}>Teaching Suggestions</h4>
             <ul style={{ paddingLeft: 18 }}>
-              {feedback.teachingSuggestions?.map((s, i) => <li key={i} className="text-sm text-secondary" style={{ marginBottom: 8, lineHeight: 1.6 }}>{s}</li>)}
+              {(Array.isArray(feedback.teachingSuggestions) ? feedback.teachingSuggestions : []).map((s, i) => <li key={i} className="text-sm text-secondary" style={{ marginBottom: 8, lineHeight: 1.6 }}>{s}</li>)}
             </ul>
           </div>
         </div>

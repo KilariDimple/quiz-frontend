@@ -40,9 +40,9 @@ export default function StudentAnalytics() {
         <div className="card mb-6">
           <h3 style={{ marginBottom: 20 }}>Performance Over Time</h3>
           <PerformanceChart
-            labels={results.map((r, i) => `Quiz ${i + 1}`)}
-            scores={results.map((r) => r.score)}
-            percentages={results.map((r) => r.percentage)}
+            labels={(Array.isArray(results) ? results : []).map((r, i) => `Quiz ${i + 1}`)}
+            scores={(Array.isArray(results) ? results : []).map((r) => r.score)}
+            percentages={(Array.isArray(results) ? results : []).map((r) => r.percentage)}
           />
         </div>
       )}
@@ -58,11 +58,11 @@ export default function StudentAnalytics() {
           </div>
           <div className="card">
             <h4 style={{ marginBottom: 12 }}>Strong Areas</h4>
-            {insights.strongAreas?.map((a, i) => <p key={i} className="text-sm" style={{ marginBottom: 6, color: 'var(--text-secondary)' }}>{a}</p>)}
+            {(Array.isArray(insights.strongAreas) ? insights.strongAreas : []).map((a, i) => <p key={i} className="text-sm" style={{ marginBottom: 6, color: 'var(--text-secondary)' }}>{a}</p>)}
           </div>
           <div className="card">
             <h4 style={{ marginBottom: 12 }}>Areas to Improve</h4>
-            {insights.weakAreas?.map((a, i) => <p key={i} className="text-sm" style={{ marginBottom: 6, color: 'var(--text-secondary)' }}>{a}</p>)}
+            {(Array.isArray(insights.weakAreas) ? insights.weakAreas : []).map((a, i) => <p key={i} className="text-sm" style={{ marginBottom: 6, color: 'var(--text-secondary)' }}>{a}</p>)}
           </div>
         </div>
       )}
@@ -71,7 +71,7 @@ export default function StudentAnalytics() {
         <div className="card mt-4">
           <h4 style={{ marginBottom: 12 }}>Study Suggestions</h4>
           <ul style={{ paddingLeft: 18 }}>
-            {insights.studySuggestions.map((s, i) => <li key={i} className="text-sm text-secondary" style={{ marginBottom: 8, lineHeight: 1.6 }}>{s}</li>)}
+            {(Array.isArray(insights.studySuggestions) ? insights.studySuggestions : []).map((s, i) => <li key={i} className="text-sm text-secondary" style={{ marginBottom: 8, lineHeight: 1.6 }}>{s}</li>)}
           </ul>
         </div>
       )}

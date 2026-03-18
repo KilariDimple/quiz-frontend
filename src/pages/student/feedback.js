@@ -55,7 +55,7 @@ export default function Feedback() {
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
           <select className="form-input" value={selectedResult} onChange={(e) => { setSelectedResult(e.target.value); setFeedback(null); }} style={{ maxWidth: 320 }}>
             <option value="">Choose...</option>
-            {results.map((r) => <option key={r._id} value={r._id}>{r.quizId?.title || 'Quiz'} — {r.percentage}%</option>)}
+            {(Array.isArray(results) ? results : []).map((r) => <option key={r._id} value={r._id}>{r.quizId?.title || 'Quiz'} — {r.percentage}%</option>)}
           </select>
           <button className="btn btn-primary" onClick={generateFeedback} disabled={!selectedResult || feedbackLoading}>
             {feedbackLoading ? 'Generating...' : 'Generate Feedback'}
@@ -69,13 +69,13 @@ export default function Feedback() {
             <div className="card">
               <h4 style={{ marginBottom: 12 }}>Strengths</h4>
               <ul style={{ paddingLeft: 18 }}>
-                {feedback.strengths?.map((s, i) => <li key={i} className="text-sm text-secondary" style={{ marginBottom: 6 }}>{s}</li>)}
+                {(Array.isArray(feedback.strengths) ? feedback.strengths : []).map((s, i) => <li key={i} className="text-sm text-secondary" style={{ marginBottom: 6 }}>{s}</li>)}
               </ul>
             </div>
             <div className="card">
               <h4 style={{ marginBottom: 12 }}>Areas to Improve</h4>
               <ul style={{ paddingLeft: 18 }}>
-                {feedback.weaknesses?.map((w, i) => <li key={i} className="text-sm text-secondary" style={{ marginBottom: 6 }}>{w}</li>)}
+                {(Array.isArray(feedback.weaknesses) ? feedback.weaknesses : []).map((w, i) => <li key={i} className="text-sm text-secondary" style={{ marginBottom: 6 }}>{w}</li>)}
               </ul>
             </div>
           </div>
@@ -83,7 +83,7 @@ export default function Feedback() {
           <div className="card mt-4">
             <h4 style={{ marginBottom: 12 }}>Suggestions</h4>
             <ul style={{ paddingLeft: 18 }}>
-              {feedback.suggestions?.map((s, i) => <li key={i} className="text-sm text-secondary" style={{ marginBottom: 6, lineHeight: 1.6 }}>{s}</li>)}
+              {(Array.isArray(feedback.suggestions) ? feedback.suggestions : []).map((s, i) => <li key={i} className="text-sm text-secondary" style={{ marginBottom: 6, lineHeight: 1.6 }}>{s}</li>)}
             </ul>
           </div>
 

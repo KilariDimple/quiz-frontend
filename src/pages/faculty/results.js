@@ -51,7 +51,7 @@ export default function FacultyResults() {
           <label>Select Quiz</label>
           <select className="form-input" value={selectedQuiz} onChange={(e) => loadResults(e.target.value)} style={{ maxWidth: 360 }}>
             <option value="">Choose a quiz...</option>
-            {quizzes.map((q) => <option key={q.id} value={q.id}>{q.title} ({q.quizCode})</option>)}
+            {(Array.isArray(quizzes) ? quizzes : []).map((q) => <option key={q.id} value={q.id}>{q.title} ({q.quizCode})</option>)}
           </select>
         </div>
       </div>
@@ -64,7 +64,7 @@ export default function FacultyResults() {
               <table className="data-table">
                 <thead><tr><th>Student</th><th>Score</th><th>Percentage</th><th>Submitted</th></tr></thead>
                 <tbody>
-                  {results.map((r) => (
+                  {(Array.isArray(results) ? results : []).map((r) => (
                     <tr key={r._id}>
                       <td className="font-medium">{r.username}</td>
                       <td>{r.score}/{r.totalQuestions}</td>
@@ -81,9 +81,9 @@ export default function FacultyResults() {
             <div className="card">
               <h3 style={{ marginBottom: 20 }}>Question Difficulty</h3>
               <DifficultyChart
-                labels={analysis.map((a, i) => `Q${i + 1}`)}
-                correctPercentages={analysis.map((a) => a.correctPercentage)}
-                wrongPercentages={analysis.map((a) => a.wrongPercentage)}
+                labels={(Array.isArray(analysis) ? analysis : []).map((a, i) => `Q${i + 1}`)}
+                correctPercentages={(Array.isArray(analysis) ? analysis : []).map((a) => a.correctPercentage)}
+                wrongPercentages={(Array.isArray(analysis) ? analysis : []).map((a) => a.wrongPercentage)}
               />
             </div>
           )}
