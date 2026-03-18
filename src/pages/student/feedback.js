@@ -27,7 +27,7 @@ export default function Feedback() {
   const generateFeedback = async () => {
     if (!selectedResult) return;
     setFeedbackLoading(true);
-    try { const res = await api.post(`/ai/feedback/${selectedResult}`); setFeedback(res.data); }
+    try { const res = await api.post(`/ai/feedback/${selectedResult}`); console.log("FEEDBACK RESPONSE:", res.data); setFeedback(res.data); }
     catch (err) { alert(err.response?.data?.message || 'Failed to generate feedback'); }
     finally { setFeedbackLoading(false); }
   };
@@ -69,13 +69,13 @@ export default function Feedback() {
             <div className="card">
               <h4 style={{ marginBottom: 12 }}>Strengths</h4>
               <ul style={{ paddingLeft: 18 }}>
-                {(Array.isArray(feedback.strengths) ? feedback.strengths : []).map((s, i) => <li key={i} className="text-sm text-secondary" style={{ marginBottom: 6 }}>{s}</li>)}
+                {(Array.isArray(feedback?.data?.strengths) ? feedback.data.strengths : []).map((s, i) => <li key={i} className="text-sm text-secondary" style={{ marginBottom: 6 }}>{s}</li>)}
               </ul>
             </div>
             <div className="card">
               <h4 style={{ marginBottom: 12 }}>Areas to Improve</h4>
               <ul style={{ paddingLeft: 18 }}>
-                {(Array.isArray(feedback.weaknesses) ? feedback.weaknesses : []).map((w, i) => <li key={i} className="text-sm text-secondary" style={{ marginBottom: 6 }}>{w}</li>)}
+                {(Array.isArray(feedback?.data?.weaknesses) ? feedback.data.weaknesses : []).map((w, i) => <li key={i} className="text-sm text-secondary" style={{ marginBottom: 6 }}>{w}</li>)}
               </ul>
             </div>
           </div>
@@ -83,14 +83,14 @@ export default function Feedback() {
           <div className="card mt-4">
             <h4 style={{ marginBottom: 12 }}>Suggestions</h4>
             <ul style={{ paddingLeft: 18 }}>
-              {(Array.isArray(feedback.suggestions) ? feedback.suggestions : []).map((s, i) => <li key={i} className="text-sm text-secondary" style={{ marginBottom: 6, lineHeight: 1.6 }}>{s}</li>)}
+              {(Array.isArray(feedback?.data?.suggestions) ? feedback.data.suggestions : []).map((s, i) => <li key={i} className="text-sm text-secondary" style={{ marginBottom: 6, lineHeight: 1.6 }}>{s}</li>)}
             </ul>
           </div>
 
-          {feedback.overallComment && (
+          {feedback?.data?.overallComment && (
             <div className="card mt-4">
               <h4 style={{ marginBottom: 8 }}>Summary</h4>
-              <p className="text-sm text-secondary" style={{ lineHeight: 1.7 }}>{feedback.overallComment}</p>
+              <p className="text-sm text-secondary" style={{ lineHeight: 1.7 }}>{feedback.data.overallComment}</p>
             </div>
           )}
 
